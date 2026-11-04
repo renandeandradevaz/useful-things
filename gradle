@@ -1,0 +1,74 @@
+//Configuração v2 conforme Wiki https://wiki.sicredi.io/display/HDEDS/Configura%C3%A7%C3%A3o+Gradle
+
+// Este bloco habilita por padrão os repositórios publicos e do Sicredi para as dependências em todos os projetos
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://nexus.sicredi.in/repository/mirror/"
+            credentials {
+                username project.repositoryUsername
+                password project.repositoryPassword
+            }
+            metadataSources {
+                mavenPom()
+                artifact()
+                // ignoreGradleMetadataRedirection()
+            }
+        }
+        maven {
+            url "https://artifactory.sicredi.net/artifactory/repo"
+            metadataSources {
+                mavenPom()
+                artifact()
+                // ignoreGradleMetadataRedirection()
+            }
+        }
+    }
+
+    buildscript {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            maven {
+                url "https://nexus.sicredi.in/repository/mirror/"
+                credentials {
+                    username project.repositoryUsername
+                    password project.repositoryPassword
+                }
+                metadataSources {
+                    mavenPom()
+                    artifact()
+                    // ignoreGradleMetadataRedirection()
+                }
+            }
+            maven {
+                url "https://artifactory.sicredi.net/artifactory/repo"
+                metadataSources {
+                    mavenPom()
+                    artifact()
+                    // ignoreGradleMetadataRedirection()
+                }
+            }
+        }
+    }
+}
+
+// Este bloco habilita por padrão os repositórios publicos e do Sicredi para os PLUGINS do Gradle (Spring/Lombok,etc)
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            mavenLocal()
+            gradlePluginPortal()
+            maven {
+                url "https://nexus.sicredi.in/repository/mirror/"
+                credentials {
+                    username "diogo_zucchi"
+                    password "SENHA"
+                }
+            }
+            maven { url"https://artifactory.sicredi.net/artifactory/repo" }
+        }
+    }
+}
